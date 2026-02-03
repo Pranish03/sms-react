@@ -1,13 +1,14 @@
-import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
     <>
-      <Helmet>
-        <title>SMS</title>
-      </Helmet>
+      <title>SMS</title>
 
       <div>Home</div>
+      <button>
+        <Link to="dashboard">Go to dashboard</Link>
+      </button>
     </>
   );
 };

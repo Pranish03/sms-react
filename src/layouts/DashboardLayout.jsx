@@ -1,20 +1,13 @@
-import { Helmet } from "react-helmet";
-
+import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 
-const DashboardLayout = ({ sidebarItems, children }) => {
+const DashboardLayout = ({ navItems }) => {
   return (
-    <>
-      <Helmet>
-        <title>Dashboard</title>
-      </Helmet>
+    <div className="flex">
+      <Sidebar items={navItems} />
 
-      <div className="flex">
-        <Sidebar items={sidebarItems} />
-
-        <main>{children}</main>
-      </div>
-    </>
+      <Outlet />
+    </div>
   );
 };
 
