@@ -1,11 +1,7 @@
-import { Helmet } from "react-helmet";
-
 const SignIn = () => {
   return (
     <>
-      <Helmet>
-        <title>Signin</title>
-      </Helmet>
+      <title>Signin</title>
 
       <div>Signin</div>
     </>
