@@ -1,15 +1,29 @@
 const SignIn = () => {
   return (
     <>
-      <title>Sign In</title>
-
+      <title>Sign UP</title>
+      
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
           <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-            Sign In
+            Sign Up
           </h2>
+          
+
 
           <form className="space-y-4">
+            {/* Fullname */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Fullname
+              </label>
+              <input
+                type="email"
+                placeholder="Enter your Fullname"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
             {/* Email */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -56,9 +70,9 @@ const SignIn = () => {
 
           {/* Footer */}
           <p className="text-center text-sm text-gray-600 mt-6">
-            Don’t have an account?{" "}
+            Already have an account?{" "}
             <a href="#" className="text-blue-600 hover:underline">
-              Sign up
+              Sign In
             </a>
           </p>
         </div>
