@@ -4,7 +4,8 @@ export const adminRoutes = [
 ];
 
 export const teacherRoutes = [
-  { path: "/dashboard/teacher/attendence", label: "Attendence" },
+  { path: "/dashboard/teacher/attendance", label: "Attendance" },
+  
 ];
 
 export const studentRoutes = [

@@ -5,6 +5,7 @@ import { adminRoutes, studentRoutes, teacherRoutes } from "./utils/routes";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
+import Signup from "./pages/Signup";
 import DashboardLayout from "./layouts/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
 import ManageUser from "./pages/admin/ManageUser";
@@ -14,7 +15,7 @@ import Courses from "./pages/student/Courses";
 import Assignments from "./pages/student/Assignments";
 
 function App() {
-  const userRole = "student";
+  const userRole = "teacher";
 
   const routes =
     userRole === "admin"
@@ -28,6 +29,7 @@ function App() {
       <Route index element={<Home />} />
       <Route path="*" element={<NotFound />} />
       <Route path="signin" element={<SignIn />} />
+      <Route path="login" element={<Signup />} />
 
       <Route path="dashboard" element={<DashboardLayout navItems={routes} />}>
         <Route index element={<Dashboard />} />
