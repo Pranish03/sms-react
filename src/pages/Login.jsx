@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Button from "../components/Button";
 
-const SignIn = () => {
+const Login = () => {
   const [formVal, setFormVal] = useState({
     email: "",
     password: "",
@@ -29,29 +30,29 @@ const SignIn = () => {
 
   return (
     <>
-      <title>Sign In</title>
+      <title>Login</title>
 
       <div className="min-h-screen flex items-center justify-center bg-white">
-        <div className="w-full max-w-md bg-white rounded-xl p-8 shadow-lg">
-          <h2 className="text-4xl font-bold text-center text-green-600 mb-6">
+        <div className="w-full max-w-md">
+          <h1 className="text-4xl font-bold text-center text-green-600 mb-6">
             S.M.S
-          </h2>
-          <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-center text-gray-900 mb-10">
-            Sign in to your account
+          </h1>
+          <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-center text-gray-800 mb-10">
+            Login to your account
           </h2>
 
-          <form className="space-y-4" onSubmit={handleSubmit}>
+          <form className="space-y-4 text-gray-800" onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor="email"
                 className="block max-w-fit text-sm text-gray-800 sm:text-base font-medium mb-2"
               >
-                Enter your email
+                Email
               </label>
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg text-sm sm:text-base focus:border-blue-600 focus:outline-1 focus:outline-blue-600"
+                className="w-full px-3 sm:px-4 py-2.5 border border-gray-300 rounded-lg text-sm sm:text-base focus:border-green-600 focus:outline-1 focus:outline-green-600"
                 value={formVal.email}
                 onChange={(e) =>
                   setFormVal((prev) => {
@@ -69,12 +70,12 @@ const SignIn = () => {
                 htmlFor="password"
                 className="block max-w-fit text-sm text-gray-800 sm:text-base font-medium mb-2"
               >
-                Enter your password
+                Password
               </label>
               <input
                 type="password"
                 placeholder="Enter your password"
-                className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg text-sm sm:text-base focus:border-blue-600 focus:outline-1 focus:outline-blue-600"
+                className="w-full px-3 sm:px-4 py-2.5 border border-gray-300 rounded-lg text-sm sm:text-base focus:border-green-600 focus:outline-1 focus:outline-green-600"
                 value={formVal.password}
                 onChange={(e) =>
                   setFormVal((prev) => {
@@ -87,7 +88,7 @@ const SignIn = () => {
               />
             </div>
 
-            <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center justify-between text-base">
               <label className="flex items-center gap-2">
                 <input type="checkbox" className="rounded" />
                 Remember me
@@ -97,24 +98,12 @@ const SignIn = () => {
               </Link>
             </div>
 
-            <button
-              type="submit"
-              className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
-            >
-              Sign In
-            </button>
+            <Button className={"w-full"}>Login</Button>
           </form>
-
-          <p className="text-center text-sm text-gray-600 mt-6">
-            Don’t have an account?{" "}
-            <Link to={"/signup"} className="text-blue-600 hover:underline">
-              Sign up
-            </Link>
-          </p>
         </div>
       </div>
     </>
   );
 };
 
-export default SignIn;
+export default Login;
