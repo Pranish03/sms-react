@@ -1,18 +1,20 @@
 import { Route, Routes } from "react-router-dom";
 
+import { adminRoutes, studentRoutes, teacherRoutes } from "./utils/routes";
 import RequireRole from "./components/RequireRole";
 import DashboardLayout from "./layouts/DashboardLayout";
-import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
-import SignIn from "./pages/SignIn";
 import Signup from "./pages/Signup";
 import ManageTeacher from "./pages/admin/ManageTeacher";
-import ManageUser from "./pages/admin/ManageUser";
+import ManageStudent from "./pages/admin/ManageStudent";
 import Assignments from "./pages/student/Assignments";
 import Courses from "./pages/student/Courses";
 import ManageAttendance from "./pages/teacher/ManageAttendance";
-import { adminRoutes, studentRoutes, teacherRoutes } from "./utils/routes";
+import AdminDashboard from "./pages/admin";
+import TeacherDashboard from "./pages/teacher";
+import StudentDashboard from "./pages/student";
+import Login from "./pages/Login";
 
 function App() {
   const userRole = "admin";
@@ -28,12 +30,10 @@ function App() {
     <Routes>
       <Route index element={<Home />} />
       <Route path="*" element={<NotFound />} />
-      <Route path="signin" element={<SignIn />} />
+      <Route path="login" element={<Login />} />
       <Route path="signup" element={<Signup />} />
 
       <Route path="dashboard" element={<DashboardLayout navItems={routes} />}>
-        <Route index element={<Dashboard />} />
-
         {
           // Admin Routes
         }
@@ -41,7 +41,8 @@ function App() {
           path="admin"
           element={<RequireRole allowedRoles={["admin"]} userRole={userRole} />}
         >
-          <Route path="users" element={<ManageUser />} />
+          <Route index element={<AdminDashboard />} />
+          <Route path="students" element={<ManageStudent />} />
           <Route path="teachers" element={<ManageTeacher />} />
         </Route>
 
@@ -54,6 +55,7 @@ function App() {
             <RequireRole allowedRoles={["teacher"]} userRole={userRole} />
           }
         >
+          <Route index element={<TeacherDashboard />} />
           <Route path="attendance" element={<ManageAttendance />} />
         </Route>
 
@@ -66,6 +68,7 @@ function App() {
             <RequireRole allowedRoles={["student"]} userRole={userRole} />
           }
         >
+          <Route index element={<StudentDashboard />} />
           <Route path="courses" element={<Courses />} />
           <Route path="assignments" element={<Assignments />} />
         </Route>

@@ -2,23 +2,39 @@ import { useState } from "react";
 import { FiEdit, FiTrash2, FiEye } from "react-icons/fi";
 import Button from "../../components/Button";
 
-const ManageTeacher = () => {
+const ManageStudent = () => {
   const [search, setSearch] = useState("");
 
-  const teachers = [
+  const students = [
     {
       id: 1,
-      name: "Ramesh Shrestha",
-      email: "ramesh@gmail.com",
-      department: "BBS",
+      name: "Ankit Sangroula",
+      email: "ankit@gmail.com",
+      department: "BSc CSIT",
+      semester: "2nd",
+      roll: 12,
     },
-    { id: 2, name: "Sita Koirala", email: "sita@gmail.com", department: "BBA" },
-    { id: 3, name: "Raj Thapa", email: "raj@gmail.com", department: "CSIT" },
+    {
+      id: 2,
+      name: "Sita Regmi",
+      email: "sita@gmail.com",
+      department: "BCA",
+      semester: "4th",
+      roll: 7,
+    },
+    {
+      id: 3,
+      name: "Rajesh Thapa",
+      email: "rajesh@gmail.com",
+      department: "BSc CSIT",
+      semester: "2nd",
+      roll: 9,
+    },
   ];
 
   return (
     <div className="w-full min-h-screen p-6">
-      <h2 className="text-3xl font-bold text-gray-800 mb-10">Teachers</h2>
+      <h2 className="text-3xl font-bold text-gray-800 mb-10">Students</h2>
 
       <div className="flex justify-between items-center mb-5">
         <input
@@ -29,7 +45,7 @@ const ManageTeacher = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
 
-        <Button>Add Teacher</Button>
+        <Button>Add Student</Button>
       </div>
 
       <div className="bg-white w-full overflow-x-auto">
@@ -38,19 +54,23 @@ const ManageTeacher = () => {
             <tr>
               <th className="p-3">S.N.</th>
               <th className="p-3">Name</th>
+              <th className="p-3">Roll No.</th>
               <th className="p-3">Email</th>
               <th className="p-3">Department</th>
+              <th className="p-3">Semester</th>
               <th className="p-3 text-center">Actions</th>
             </tr>
           </thead>
 
           <tbody>
-            {teachers.map((teacher, index) => (
-              <tr key={teacher.id} className="border-b border-black/50">
+            {students.map((student, index) => (
+              <tr key={student.id} className="border-b border-black/50">
                 <td className="p-3">{index + 1}</td>
-                <td className="p-3 font-medium">{teacher.name}</td>
-                <td className="p-3">{teacher.email}</td>
-                <td className="p-3">{teacher.department}</td>
+                <td className="p-3 font-medium">{student.name}</td>
+                <td className="p-3">{student.roll}</td>
+                <td className="p-3">{student.email}</td>
+                <td className="p-3">{student.department}</td>
+                <td className="p-3">{student.semester}</td>
                 <td className="p-3 flex items-center justify-center gap-4">
                   <button className="cursor-pointer p-2 rounded-lg bg-green-600 text-white">
                     <FiEye />
@@ -73,4 +93,4 @@ const ManageTeacher = () => {
   );
 };
 
-export default ManageTeacher;
+export default ManageStudent;
