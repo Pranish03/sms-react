@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
+import axios from "axios";
 
 import { adminRoutes, studentRoutes, teacherRoutes } from "./utils/routes";
 import RequireRole from "./components/RequireRole";
@@ -24,18 +25,21 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/me", {
-      credentials: "include",
-    })
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
-        setUser(data?.user || null);
-        setLoading(false);
-      })
-      .catch(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/me", {
+          withCredentials: true,
+        });
+        setUser(res.data.user);
+      } catch (err) {
+        console.log(err);
         setUser(null);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchUser();
   }, []);
 
   if (loading) {

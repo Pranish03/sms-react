@@ -1,14 +1,11 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: `${import.meta.env.VITE_API_URL}`,
   withCredentials: true,
 });
 
-export const fetchStudents = () => API.get("/api/students");
-
-export const createStudent = (data) => API.post("/api/student", data);
-
-export const updateStudent = (id, data) => API.put(`/api/student/${id}`, data);
-
-export const deleteStudent = (id) => API.delete(`/api/student/${id}`);
+export const fetchStudents = () => API.get("/students");
+export const createStudent = (data) => API.post("/student", data);
+export const updateStudent = (id, data) => API.put(`/student/${id}`, data);
+export const deleteStudent = (id) => API.delete(`/student/${id}`);

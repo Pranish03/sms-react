@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import axios from "axios";
 import Button from "../components/Button";
 
 const Login = () => {
@@ -8,26 +9,20 @@ const Login = () => {
     password: "",
   });
 
-  const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const res = await fetch(`http://localhost:5000/api/login`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/login`,
+        formVal,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-        body: JSON.stringify(formVal),
-      });
-
-      const data = await res.json();
-
-      if (data.role === "admin") navigate("/dashboard/admin");
-      if (data.role === "teacher") navigate("/dashboard/teacher");
-      if (data.role === "student") navigate("/dashboard/student");
+      );
+      window.location.href = `/dashboard/${data.user.role}`;
     } catch (err) {
       console.error(err.message);
     }

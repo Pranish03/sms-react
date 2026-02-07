@@ -1,49 +1,64 @@
-// src/components/Footer.jsx
-import React from "react";
 import { Link } from "react-router-dom";
+import Button from "./Button";
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-gray-900 text-gray-300 py-10">
-      {/* Top Footer */}
-      <div className="container mx-auto flex flex-col md:flex-row justify-between gap-8 px-6">
-        {/* Left Side */}
-        <div className="flex-1 min-w-[200px]">
-          <h2 className="text-lg font-semibold text-white mb-2">
-            Student Management System
-          </h2>
-          <p className="text-gray-400">
+    <footer className="w-full bg-black/95 text-gray-300 py-10">
+      <div className="w-300 mx-auto flex flex-col md:flex-row justify-between gap-8 px-2 border-b border-white/10 pb-10">
+        <div>
+          <h2 className="text-xl font-bold text-white mb-2">S.M.S.</h2>
+          <p className="text-gray-300">
             Manage students, teachers, attendance, and more all in one place.
+            <br />
             Simplify your school management with ease and efficiency.
           </p>
         </div>
 
-        {/* Right Side Quick Links */}
-        <div className="flex-1 min-w-[150px] text-right">
+        <div className="text-right">
           <h3 className="text-white font-semibold mb-2">Quick Links</h3>
           <ul className="space-y-1">
             <li>
-              <Link to="/home" className="hover:text-blue-500 transition">
+              <Link
+                to="/"
+                className="hover:text-green-500 text-gray-300 transition"
+              >
                 Home
               </Link>
             </li>
             <li>
-              <Link to="/contact" className="hover:text-blue-500 transition">
+              <Link
+                to="/"
+                className="hover:text-green-500 text-gray-300 transition"
+              >
                 Contact
               </Link>
             </li>
             <li>
-              <Link to="/teachers" className="hover:text-blue-500 transition">
+              <Link
+                to="/"
+                className="hover:text-green-500 text-gray-300 transition"
+              >
                 About Us
               </Link>
             </li>
           </ul>
         </div>
+
+        <div>
+          <h3 className="text-white font-semibold mb-2">Newsletter</h3>
+          <div className="flex gap-2">
+            <input
+              className="bg-white px-4 py-2.5 text-base rounded-lg placeholder:text-gray-500 text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-600"
+              type="text"
+              placeholder="Enter email address"
+            />
+            <Button>Subscribe</Button>
+          </div>
+        </div>
       </div>
 
-      {/* Bottom Footer */}
-      <div className="border-t border-gray-700 mt-8 pt-4 text-center text-gray-500 text-sm">
-        © 2026 Student Management System. All rights reserved.
+      <div className=" mt-6 pt-4 text-center text-gray-300 text-sm">
+        © 2026 S.M.S. All rights reserved.
       </div>
     </footer>
   );

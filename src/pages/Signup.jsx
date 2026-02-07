@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
-
+import axios from "axios";
 import Button from "../components/Button";
-import { api } from "../utils/api";
 
 const Signup = () => {
   const [formVal, setFormVal] = useState({
@@ -13,16 +11,14 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const data = await api("/signup", {
-        method: "POST",
-        body: JSON.stringify(formVal),
+      await axios.post(`${import.meta.env.VITE_API_URL}/signup`, formVal, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
-
-      if (data.role === "admin") Navigate("/dashboard/admin");
-      if (data.role === "teacher") Navigate("/dashboard/teacher");
-      if (data.role === "student") Navigate("/dashboard/student");
+      window.location.href = `/dashboard/admin`;
     } catch (err) {
       console.error(err.message);
     }
@@ -44,7 +40,7 @@ const Signup = () => {
           <form className="space-y-4 text-gray-800" onSubmit={handleSubmit}>
             <div>
               <label
-                htmlFor="email"
+                htmlFor="name"
                 className="block max-w-fit text-sm text-gray-800 sm:text-base font-medium mb-2"
               >
                 Name
@@ -111,7 +107,9 @@ const Signup = () => {
               />
             </div>
 
-            <Button className={"w-full"}>Signup</Button>
+            <Button type="submit" className={"w-full"}>
+              Signup
+            </Button>
           </form>
         </div>
       </div>
