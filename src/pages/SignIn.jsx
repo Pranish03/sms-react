@@ -1,4 +1,32 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
 const SignIn = () => {
+  const [formVal, setFormVal] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formVal);
+
+    const response = await fetch("http://localhost:5000/api/login", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        email: formVal.email,
+        password: formVal.password,
+      }),
+    });
+
+    const data = await response.json();
+    console.log(data.message);
+  };
+
   return (
     <>
       <title>Sign In</title>
@@ -12,49 +40,63 @@ const SignIn = () => {
             Sign in to your account
           </h2>
 
-          <form className="space-y-4">
-            {/* Email */}
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <label
-            for="email"
-            class="block max-w-fit text-sm text-gray-800 sm:text-base font-medium mb-2"
-          >
-            Enter your email
+                htmlFor="email"
+                className="block max-w-fit text-sm text-gray-800 sm:text-base font-medium mb-2"
+              >
+                Enter your email
               </label>
               <input
                 type="email"
                 placeholder="Enter your email"
                 className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg text-sm sm:text-base focus:border-blue-600 focus:outline-1 focus:outline-blue-600"
+                value={formVal.email}
+                onChange={(e) =>
+                  setFormVal((prev) => {
+                    return {
+                      ...prev,
+                      email: e.target.value,
+                    };
+                  })
+                }
               />
             </div>
 
-            {/* Password */}
             <div>
               <label
-            for="password"
-            class="block max-w-fit text-sm text-gray-800 sm:text-base font-medium mb-2"
-          >
-            Enter your password
+                htmlFor="password"
+                className="block max-w-fit text-sm text-gray-800 sm:text-base font-medium mb-2"
+              >
+                Enter your password
               </label>
               <input
                 type="password"
                 placeholder="Enter your password"
                 className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg text-sm sm:text-base focus:border-blue-600 focus:outline-1 focus:outline-blue-600"
+                value={formVal.password}
+                onChange={(e) =>
+                  setFormVal((prev) => {
+                    return {
+                      ...prev,
+                      password: e.target.value,
+                    };
+                  })
+                }
               />
             </div>
 
-            {/* Remember + Forgot */}
             <div className="flex items-center justify-between text-sm">
               <label className="flex items-center gap-2">
                 <input type="checkbox" className="rounded" />
                 Remember me
               </label>
-              <a href="#" className="text-blue-600 hover:underline">
+              <Link className="text-blue-600 hover:underline">
                 Forgot password?
-              </a>
+              </Link>
             </div>
 
-            {/* Button */}
             <button
               type="submit"
               className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
@@ -63,12 +105,11 @@ const SignIn = () => {
             </button>
           </form>
 
-          {/* Footer */}
           <p className="text-center text-sm text-gray-600 mt-6">
             Don’t have an account?{" "}
-            <a href="#" className="text-blue-600 hover:underline">
+            <Link to={"/signup"} className="text-blue-600 hover:underline">
               Sign up
-            </a>
+            </Link>
           </p>
         </div>
       </div>
