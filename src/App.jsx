@@ -1,21 +1,18 @@
 import { Route, Routes } from "react-router-dom";
 
 import RequireRole from "./components/RequireRole";
-import { adminRoutes, studentRoutes, teacherRoutes } from "./utils/routes";
-import NotFound from "./pages/NotFound";
-import Home from "./pages/Home";
-import Hero from"./components/Hero";
-import Footer from"./components/Footer";
-import Header from"./components/Header";
-import SignIn from "./pages/SignIn";
-import Signup from "./pages/Signup";
 import DashboardLayout from "./layouts/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
-import ManageUser from "./pages/admin/ManageUser";
+import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
+import SignIn from "./pages/SignIn";
+import Signup from "./pages/Signup";
 import ManageTeacher from "./pages/admin/ManageTeacher";
-import ManageAttendance from "./pages/teacher/ManageAttendance";
-import Courses from "./pages/student/Courses";
+import ManageUser from "./pages/admin/ManageUser";
 import Assignments from "./pages/student/Assignments";
+import Courses from "./pages/student/Courses";
+import ManageAttendance from "./pages/teacher/ManageAttendance";
+import { adminRoutes, studentRoutes, teacherRoutes } from "./utils/routes";
 
 function App() {
   const userRole = "admin";
