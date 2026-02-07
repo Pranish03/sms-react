@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import { adminRoutes, studentRoutes, teacherRoutes } from "./utils/routes";
@@ -15,9 +16,37 @@ import AdminDashboard from "./pages/admin";
 import TeacherDashboard from "./pages/teacher";
 import StudentDashboard from "./pages/student";
 import Login from "./pages/Login";
+import RequireAuth from "./components/RequireAuth";
+import RequireGuest from "./components/RequireGuest";
 
 function App() {
-  const userRole = "admin";
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/me", {
+      credentials: "include",
+    })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        setUser(data?.user || null);
+        setLoading(false);
+      })
+      .catch(() => {
+        setUser(null);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <p className="text-lg font-medium">Checking authentication…</p>
+      </div>
+    );
+  }
+
+  const userRole = user?.role;
 
   const routes =
     userRole === "admin"
@@ -30,47 +59,48 @@ function App() {
     <Routes>
       <Route index element={<Home />} />
       <Route path="*" element={<NotFound />} />
-      <Route path="login" element={<Login />} />
-      <Route path="signup" element={<Signup />} />
 
-      <Route path="dashboard" element={<DashboardLayout navItems={routes} />}>
-        {
-          // Admin Routes
-        }
-        <Route
-          path="admin"
-          element={<RequireRole allowedRoles={["admin"]} userRole={userRole} />}
-        >
-          <Route index element={<AdminDashboard />} />
-          <Route path="students" element={<ManageStudent />} />
-          <Route path="teachers" element={<ManageTeacher />} />
-        </Route>
+      <Route element={<RequireGuest user={user} />}>
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
+      </Route>
 
-        {
-          // Teacher Routes
-        }
-        <Route
-          path="teacher"
-          element={
-            <RequireRole allowedRoles={["teacher"]} userRole={userRole} />
-          }
-        >
-          <Route index element={<TeacherDashboard />} />
-          <Route path="attendance" element={<ManageAttendance />} />
-        </Route>
+      <Route element={<RequireAuth user={user} />}>
+        <Route path="dashboard" element={<DashboardLayout navItems={routes} />}>
+          {/* Admin */}
+          <Route
+            path="admin"
+            element={
+              <RequireRole allowedRoles={["admin"]} userRole={userRole} />
+            }
+          >
+            <Route index element={<AdminDashboard />} />
+            <Route path="students" element={<ManageStudent />} />
+            <Route path="teachers" element={<ManageTeacher />} />
+          </Route>
 
-        {
-          // Student Routes
-        }
-        <Route
-          path="student"
-          element={
-            <RequireRole allowedRoles={["student"]} userRole={userRole} />
-          }
-        >
-          <Route index element={<StudentDashboard />} />
-          <Route path="courses" element={<Courses />} />
-          <Route path="assignments" element={<Assignments />} />
+          {/* Teacher */}
+          <Route
+            path="teacher"
+            element={
+              <RequireRole allowedRoles={["teacher"]} userRole={userRole} />
+            }
+          >
+            <Route index element={<TeacherDashboard />} />
+            <Route path="attendance" element={<ManageAttendance />} />
+          </Route>
+
+          {/* Student */}
+          <Route
+            path="student"
+            element={
+              <RequireRole allowedRoles={["student"]} userRole={userRole} />
+            }
+          >
+            <Route index element={<StudentDashboard />} />
+            <Route path="courses" element={<Courses />} />
+            <Route path="assignments" element={<Assignments />} />
+          </Route>
         </Route>
       </Route>
     </Routes>

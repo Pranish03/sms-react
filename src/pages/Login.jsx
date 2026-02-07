@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 
 const Login = () => {
@@ -8,24 +8,29 @@ const Login = () => {
     password: "",
   });
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formVal);
 
-    const response = await fetch("http://localhost:5000/api/login", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({
-        email: formVal.email,
-        password: formVal.password,
-      }),
-    });
+    try {
+      const res = await fetch(`http://localhost:5000/api/login`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formVal),
+      });
 
-    const data = await response.json();
-    console.log(data.message);
+      const data = await res.json();
+
+      if (data.role === "admin") navigate("/dashboard/admin");
+      if (data.role === "teacher") navigate("/dashboard/teacher");
+      if (data.role === "student") navigate("/dashboard/student");
+    } catch (err) {
+      console.error(err.message);
+    }
   };
 
   return (
@@ -98,7 +103,9 @@ const Login = () => {
               </Link>
             </div>
 
-            <Button className={"w-full"}>Login</Button>
+            <Button type="submit" className="w-full">
+              Login
+            </Button>
           </form>
         </div>
       </div>

@@ -1,36 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiEdit, FiTrash2, FiEye } from "react-icons/fi";
 import Button from "../../components/Button";
-
+import { fetchStudents, deleteStudent } from "../../api/studentApi";
 const ManageStudent = () => {
   const [search, setSearch] = useState("");
 
-  const students = [
-    {
-      id: 1,
-      name: "Ankit Sangroula",
-      email: "ankit@gmail.com",
-      department: "BSc CSIT",
-      semester: "2nd",
-      roll: 12,
-    },
-    {
-      id: 2,
-      name: "Sita Regmi",
-      email: "sita@gmail.com",
-      department: "BCA",
-      semester: "4th",
-      roll: 7,
-    },
-    {
-      id: 3,
-      name: "Rajesh Thapa",
-      email: "rajesh@gmail.com",
-      department: "BSc CSIT",
-      semester: "2nd",
-      roll: 9,
-    },
-  ];
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const loadStudents = async () => {
+    try {
+      const res = await fetchStudents();
+      setStudents(res.data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadStudents();
+  }, []);
+
+  const handleDelete = async (id) => {
+    if (!confirm("Delete this student?")) return;
+
+    await deleteStudent(id);
+    loadStudents();
+  };
 
   return (
     <div className="w-full min-h-screen p-6">
@@ -49,45 +47,52 @@ const ManageStudent = () => {
       </div>
 
       <div className="bg-white w-full overflow-x-auto">
-        <table className="w-full text-left text-gray-800">
-          <thead className="border-y border-black/50">
-            <tr>
-              <th className="p-3">S.N.</th>
-              <th className="p-3">Name</th>
-              <th className="p-3">Roll No.</th>
-              <th className="p-3">Email</th>
-              <th className="p-3">Department</th>
-              <th className="p-3">Semester</th>
-              <th className="p-3 text-center">Actions</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {students.map((student, index) => (
-              <tr key={student.id} className="border-b border-black/50">
-                <td className="p-3">{index + 1}</td>
-                <td className="p-3 font-medium">{student.name}</td>
-                <td className="p-3">{student.roll}</td>
-                <td className="p-3">{student.email}</td>
-                <td className="p-3">{student.department}</td>
-                <td className="p-3">{student.semester}</td>
-                <td className="p-3 flex items-center justify-center gap-4">
-                  <button className="cursor-pointer p-2 rounded-lg bg-green-600 text-white">
-                    <FiEye />
-                  </button>
-
-                  <button className="cursor-pointer p-2 rounded-lg bg-green-600 text-white">
-                    <FiEdit />
-                  </button>
-
-                  <button className="cursor-pointer p-2 rounded-lg bg-red-600 text-white">
-                    <FiTrash2 />
-                  </button>
-                </td>
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <table className="w-full text-left text-gray-800">
+            <thead className="border-y border-black/50">
+              <tr>
+                <th className="p-3">S.N.</th>
+                <th className="p-3">Name</th>
+                <th className="p-3">Roll No.</th>
+                <th className="p-3">Email</th>
+                <th className="p-3">Department</th>
+                <th className="p-3">Semester</th>
+                <th className="p-3 text-center">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {students.map((student, index) => (
+                <tr key={student._id} className="border-b border-black/50">
+                  <td className="p-3">{index + 1}</td>
+                  <td className="p-3 font-medium">{student.user.name}</td>
+                  <td className="p-3">{student.rollNo}</td>
+                  <td className="p-3">{student.user.email}</td>
+                  <td className="p-3">{student.department}</td>
+                  <td className="p-3">{student.semester}</td>
+                  <td className="p-3 flex items-center justify-center gap-4">
+                    <button className="cursor-pointer p-2 rounded-lg bg-green-600 text-white">
+                      <FiEye />
+                    </button>
+
+                    <button className="cursor-pointer p-2 rounded-lg bg-green-600 text-white">
+                      <FiEdit />
+                    </button>
+
+                    <button
+                      className="cursor-pointer p-2 rounded-lg bg-red-600 text-white"
+                      onClick={() => handleDelete(student._id)}
+                    >
+                      <FiTrash2 />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );

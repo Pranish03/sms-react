@@ -1,5 +1,8 @@
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
+
 import Button from "../components/Button";
+import { api } from "../utils/api";
 
 const Signup = () => {
   const [formVal, setFormVal] = useState({
@@ -10,23 +13,19 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formVal);
 
-    const response = await fetch("http://localhost:5000/api/signup", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({
-        name: formVal.name,
-        email: formVal.email,
-        password: formVal.password,
-      }),
-    });
+    try {
+      const data = await api("/signup", {
+        method: "POST",
+        body: JSON.stringify(formVal),
+      });
 
-    const data = await response.json();
-    console.log(data.message);
+      if (data.role === "admin") Navigate("/dashboard/admin");
+      if (data.role === "teacher") Navigate("/dashboard/teacher");
+      if (data.role === "student") Navigate("/dashboard/student");
+    } catch (err) {
+      console.error(err.message);
+    }
   };
 
   return (
