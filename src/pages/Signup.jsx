@@ -1,12 +1,15 @@
-const SignIn = () => {
+const SignUp = () => {
   return (
     <>
       <title>Sign UP</title>
       
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
-          <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-            Sign Up
+          <h2 className="text-4xl font-bold text-center text-green-600 mb-6">
+            S.M.S
+          </h2>
+          <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-center text-gray-900 mb-10">
+            Sign Up To Create your Account
           </h2>
           
 
@@ -62,7 +65,7 @@ const SignIn = () => {
             {/* Button */}
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+              className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
             >
               Sign In
             </button>
@@ -81,4 +84,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;

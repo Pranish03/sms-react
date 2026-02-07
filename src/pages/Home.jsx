@@ -1,15 +1,14 @@
 import { Link } from "react-router-dom";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import Hero from "../components/Hero";
 
 const Home = () => {
   return (
     <>
-      <title>SMS</title>
-
-      <div>Home</div>
-      <button>
-        <Link to="/dashboard">Go to dashboard</Link>
-
-      </button>
+      <Header />
+      <Hero />
+      <Footer/>
     </>
   );
 };

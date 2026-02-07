@@ -4,7 +4,10 @@ export const adminRoutes = [
 ];
 
 export const teacherRoutes = [
-  { path: "/dashboard/teacher/attendance", label: "Attendance" },
+  { path: "/dashboard/teacher/attendance", label: "Manage Students Attendance" },
+  { path: "/dashboard/teacher/attendance", label: "Publish Materials & Assignments" },
+   { path: "/dashboard/teacher/attendance", label: "Publish Materials & Assignments" },
+    { path: "/dashboard/teacher/attendance", label: "Publish Materials & Assignments" },
   
 ];
 
