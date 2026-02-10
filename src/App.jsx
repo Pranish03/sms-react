@@ -24,21 +24,21 @@ function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await axios.get("http://localhost:5000/api/me", {
-          withCredentials: true,
-        });
-        setUser(res.data.user);
-      } catch (err) {
-        console.log(err);
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchUser = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/me", {
+        withCredentials: true,
+      });
+      setUser(res.data.user);
+    } catch (err) {
+      console.log(err);
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchUser();
   }, []);
 
@@ -61,7 +61,7 @@ function App() {
 
   return (
     <Routes>
-      <Route index element={<Home />} />
+      <Route index element={<Home user={user} />} />
       <Route path="*" element={<NotFound />} />
 
       <Route element={<RequireGuest user={user} />}>

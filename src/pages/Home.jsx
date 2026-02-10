@@ -3,12 +3,12 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 
-const Home = () => {
+const Home = ({ user }) => {
   return (
     <>
-      <Header />
-      <Hero />
-      <Footer/>
+      <Header user={user} />
+      <Hero user={user} />
+      <Footer />
     </>
   );
 };

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import Button from "./Button";
 
-export default function Header() {
+export default function Header({ user }) {
   const navigate = useNavigate();
 
   return (
@@ -13,12 +13,18 @@ export default function Header() {
         S.M.S.
       </h1>
 
-      <nav className="flex items-center gap-6 text-base">
-        <Link to="/login">Login</Link>
+      {user ? (
+        <nav className="flex items-center gap-6 text-base">
+          <Link to="/login">Login</Link>
+          <Link to="/signup">
+            <Button>Signup as admin</Button>
+          </Link>
+        </nav>
+      ) : (
         <Link to="/signup">
           <Button>Signup as admin</Button>
         </Link>
-      </nav>
+      )}
     </header>
   );
 }
